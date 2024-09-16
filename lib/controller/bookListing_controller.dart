@@ -21,8 +21,9 @@ import 'notification_controller.dart';
 class BookListingController extends GetxController {
   final HomeController homeController = Get.find<HomeController>();
   final WalletController walletController = Get.put(WalletController());
-  final NotificationController notificationController = Get.put(NotificationController());
-  final ChatController chatController=Get.put(ChatController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
+  final ChatController chatController = Get.put(ChatController());
   final UserController userController = Get.put(UserController());
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bookPartController = TextEditingController();
@@ -31,7 +32,23 @@ class BookListingController extends GetxController {
   final TextEditingController priceController = TextEditingController();
   // final user=FirebaseAuth.instance.currentUser!.uid;
   RxString bookCondition = 'New'.obs;
+  RxString category = 'Men'.obs;
+  RxString size = '3XS'.obs;
+
   List<String> bookConditions = ['New', 'Used', 'Old'];
+  List<String> sizes = [
+    '3XS',
+    '2XS',
+    'XS',
+    'S',
+    'M',
+    'L',
+    'XL',
+    '2XL',
+    '3XL',
+    '4XL',
+  ];
+  List<String> categorys = ['Fashion', 'Men', 'Women'];
   File? imageFile;
   void pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -97,11 +114,12 @@ class BookListingController extends GetxController {
   // **************Store book listing by user**********
   Future<void> addBookListing(BuildContext context) async {
     try {
-      isLoading.value=true;
+      isLoading.value = true;
       if (titleController.text.isNotEmpty &&
           priceController.text.isNotEmpty &&
           classNameController.text.isNotEmpty &&
-          authorController.text.isNotEmpty && imageFile!=null) {
+          authorController.text.isNotEmpty &&
+          imageFile != null) {
         // mySellListings.add({
         //   'bookImage':AppImages.harryPotterBook,
         //   'bookName':titleController.text,
@@ -119,7 +137,7 @@ class BookListingController extends GetxController {
 
         DocumentReference bookId =
             await FirebaseFirestore.instance.collection('booksListing').add({
-              'bookName': titleController.text,
+          'bookName': titleController.text,
           'bookPart': bookPartController.text,
           'bookAuthor': authorController.text,
           'bookClass': classNameController.text,
@@ -127,45 +145,48 @@ class BookListingController extends GetxController {
           'bookPrice': int.tryParse(priceController.text) ?? 0,
           'bookPosted': DateTime.now(),
           'sellerId': FirebaseAuth.instance.currentUser!.uid,
-          'bookDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
+          'bookDescription':
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
           'approval': false,
-
         });
-        DocumentSnapshot userSnap=   await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).get();
-        dynamic userData=userSnap.data();
-        String schoolName=userData['userSchool'];
+        DocumentSnapshot userSnap = await FirebaseFirestore.instance
+            .collection('userDetails')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .get();
+        dynamic userData = userSnap.data();
+        String schoolName = userData['userSchool'];
         await uploadBookImage(bookId.id);
         await FirebaseFirestore.instance
             .collection('booksListing')
             .doc(bookId.id)
             .set({
           'listingId': bookId.id,
-         'bookImage': imageUrl,
-          'schoolName':schoolName
+          'bookImage': imageUrl,
+          'schoolName': schoolName
         }, SetOptions(merge: true));
-        imageFile=null;
+        imageFile = null;
 
         Get.snackbar('Success', "Book Listing Added");
-        isLoading.value=false;
+        isLoading.value = false;
         CustomRoute.navigateTo(context, ApprovalSellScreen());
-       await fetchUserBookListing();
+        await fetchUserBookListing();
         titleController.clear();
         bookPartController.clear();
         authorController.clear();
         classNameController.clear();
         priceController.clear();
-
       } else {
         Get.snackbar('Missing Values', "Enter All Fields");
-        isLoading.value=false;
+        isLoading.value = false;
       }
     } catch (e) {
-      isLoading.value=false;
+      isLoading.value = false;
       print("Error listing book $e");
     }
   }
-String imageUrl='';
-  Future<void> uploadBookImage(String listingId) async{
+
+  String imageUrl = '';
+  Future<void> uploadBookImage(String listingId) async {
     try {
       // Get a reference to the Firebase Storage location
       Reference storageReference = FirebaseStorage.instance
@@ -177,21 +198,19 @@ String imageUrl='';
       UploadTask uploadTask = storageReference.putFile(imageFile!);
       TaskSnapshot taskSnapshot = await uploadTask;
 
-       imageUrl=await taskSnapshot.ref.getDownloadURL();
-       update();
+      imageUrl = await taskSnapshot.ref.getDownloadURL();
+      update();
 
       print("Image uploaded");
-
     } catch (e) {
       print('Error uploading image to Firebase Storage: $e');
-
     }
-
   }
+
   // **************update book listings of  user**********
-  Future<void> updateBookListing(BuildContext context,String listingId) async {
+  Future<void> updateBookListing(BuildContext context, String listingId) async {
     try {
-      isLoading.value=true;
+      isLoading.value = true;
       if (titleController.text.isNotEmpty &&
           priceController.text.isNotEmpty &&
           classNameController.text.isNotEmpty &&
@@ -211,7 +230,10 @@ String imageUrl='';
         //   'approval':false,
         // },);
 
-        await FirebaseFirestore.instance.collection('booksListing').doc(listingId).update({
+        await FirebaseFirestore.instance
+            .collection('booksListing')
+            .doc(listingId)
+            .update({
           'bookName': titleController.text,
           'bookPart': bookPartController.text,
           'bookAuthor': authorController.text,
@@ -220,24 +242,25 @@ String imageUrl='';
           'bookPrice': int.tryParse(priceController.text) ?? 0,
           'bookPosted': DateTime.now(),
           'sellerId': FirebaseAuth.instance.currentUser!.uid,
-          'bookDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
+          'bookDescription':
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
           'approval': false,
         });
-       if(imageFile!=null)
-         { await uploadBookImage(listingId);
-         await FirebaseFirestore.instance
-             .collection('booksListing')
-             .doc(listingId)
-             .set({
-           'bookImage': imageUrl,
-         }, SetOptions(merge: true));
-         imageFile=null;
-         }
+        if (imageFile != null) {
+          await uploadBookImage(listingId);
+          await FirebaseFirestore.instance
+              .collection('booksListing')
+              .doc(listingId)
+              .set({
+            'bookImage': imageUrl,
+          }, SetOptions(merge: true));
+          imageFile = null;
+        }
         // mySellListings.refresh();
         // update();
         // Get.back();
         Get.snackbar('Success', "Book Listing Updated");
-        isLoading.value=false;
+        isLoading.value = false;
 
         CustomRoute.navigateTo(context, ApprovalSellScreen());
         await fetchUserBookListing();
@@ -249,23 +272,20 @@ String imageUrl='';
         priceController.clear();
       } else {
         Get.snackbar('Missing Values', "Enter All Fields");
-        isLoading.value=false;
-
+        isLoading.value = false;
       }
     } catch (e) {
-      isLoading.value=false;
+      isLoading.value = false;
 
       print("Error listing book $e");
     }
   }
 
-
-
   // **************Fetch book listings of that user**********
   Future<void> fetchUserBookListing() async {
     try {
       mySellListings.clear();
-      isLoading.value =true;
+      isLoading.value = true;
       QuerySnapshot listingsData = await FirebaseFirestore.instance
           .collection('booksListing')
           .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
@@ -285,20 +305,17 @@ String imageUrl='';
             'sellerId': bookData['sellerId'],
             'bookDescription': bookData['bookDescription'],
             'approval': bookData['approval'],
-            'listingId':bookData['listingId']
+            'listingId': bookData['listingId']
           });
         });
         print('Current User sell listings ${mySellListings}');
-
       } else {
         print("No user listings found");
       }
-      isLoading.value =false;
-
+      isLoading.value = false;
     } catch (e) {
       print("Error fetch user listings $e");
-      isLoading.value =false;
-
+      isLoading.value = false;
     }
   }
 
@@ -319,94 +336,88 @@ String imageUrl='';
     }
   }
 
-
-
 // **************buy book**********
-  RxBool isLoading=false.obs;
-Future<void> buyBook(String listingId,String sellerId,BuildContext context,String bookName,int purchasePrice,String bookImage) async{
-   try{
-     isLoading.value=true;
-     // Check if balance is zero
-     if (walletController.walletbalance.value == 0) {
-       Get.snackbar('Low Balance', ' Add money to their wallet');
-       isLoading.value=false;
+  RxBool isLoading = false.obs;
+  Future<void> buyBook(String listingId, String sellerId, BuildContext context,
+      String bookName, int purchasePrice, String bookImage) async {
+    try {
+      isLoading.value = true;
+      // Check if balance is zero
+      if (walletController.walletbalance.value == 0) {
+        Get.snackbar('Low Balance', ' Add money to their wallet');
+        isLoading.value = false;
+      } else {
+        int appFees = (purchasePrice * 0.2).round();
+        int finalPrice = purchasePrice - appFees;
+        // DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
+        //   'bookId':listingId,
+        //   'buyerId':FirebaseAuth.instance.currentUser!.uid,
+        //   'orderDate':DateTime.now(),
+        //   'deliveryStatus':false
+        // });
+        DocumentReference docRef =
+            await FirebaseFirestore.instance.collection('orders').add({
+          // listing id is our book id
+          'bookId': listingId,
+          'buyerId': FirebaseAuth.instance.currentUser!.uid,
+          'orderDate': DateTime.now(),
+          'deliveryStatus': false,
+          'sellerId': sellerId,
+          'buyerApproval': false,
+          'sellerApproval': false,
+          'buyingprice': purchasePrice,
+          'appFees': appFees,
+          'finalPrice': finalPrice,
+        });
+        // await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
+        //   'orderId':docRef.id
+        // },SetOptions(merge: true)
+        // );
+        await FirebaseFirestore.instance
+            .collection('orders')
+            .doc(docRef.id)
+            .set({'orderId': docRef.id}, SetOptions(merge: true));
+        await walletController.updatebalance(purchasePrice);
+        await FirebaseFirestore.instance
+            .collection('userDetails')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set({
+          'userPurchases': FieldValue.arrayUnion([listingId]),
+        }, SetOptions(merge: true));
+        userController.userPurchases.add(listingId);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const AlertDialog(
+                // title: Text('Hello!'),
 
-     }
-     else{
-       int appFees = (purchasePrice * 0.2).round();
-       int finalPrice = purchasePrice - appFees;
-       // DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
-       //   'bookId':listingId,
-       //   'buyerId':FirebaseAuth.instance.currentUser!.uid,
-       //   'orderDate':DateTime.now(),
-       //   'deliveryStatus':false
-       // });
-       DocumentReference docRef=   await FirebaseFirestore.instance.collection('orders').add({
-         // listing id is our book id
-         'bookId':listingId,
-         'buyerId':FirebaseAuth.instance.currentUser!.uid,
-         'orderDate':DateTime.now(),
-         'deliveryStatus':false,
-         'sellerId':sellerId,
-         'buyerApproval':false,
-         'sellerApproval':false,
-         'buyingprice':purchasePrice,
-         'appFees': appFees,
-         'finalPrice': finalPrice,
-       });
-       // await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
-       //   'orderId':docRef.id
-       // },SetOptions(merge: true)
-       // );
-       await FirebaseFirestore.instance.collection('orders').doc(docRef.id).set({
-         'orderId':docRef.id
-       },SetOptions(merge: true)
-       );
-       await walletController.updatebalance(purchasePrice);
-       await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
-         'userPurchases':FieldValue.arrayUnion([listingId]),
-       },SetOptions(merge: true));
-       userController.userPurchases.add(listingId);
-       showDialog(
-         context: context,
-         builder: (BuildContext context) {
-           return const AlertDialog(
-             // title: Text('Hello!'),
+                content: BuyDialogBox());
+          },
+        );
+        await notificationController.sendFcmMessage(
+            'New message', 'You got the order', sellerId);
 
-               content: BuyDialogBox()
+        await notificationController.storeNotification(
+            purchasePrice, docRef.id, listingId, bookName, 'purchased');
 
-           );
-         },
-       );
-       await notificationController.sendFcmMessage('New message', 'You got the order', sellerId);
+        await chatController.createChatConvo(
+            listingId, docRef.id, bookName, sellerId, bookImage);
+        await chatController.getorderId(listingId);
 
-       await notificationController.storeNotification(purchasePrice, docRef.id, listingId,bookName,'purchased');
+        // await checkUserBookOrder(listingId,sellerId);
 
-       await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId,bookImage);
-       await  chatController.getorderId(listingId);
+        print("book bought");
+        isLoading.value = false;
+      }
 
-       // await checkUserBookOrder(listingId,sellerId);
-
-
-       print("book bought");
-       isLoading.value=false;
-     }
-
-     isLoading.value=false;
-
-   }catch(e){
-     print("error buying book $e");
-     isLoading.value=false;
-   }finally{
-     isLoading.value=false;
-
-   }
-}
-
-
-
-
-
+      isLoading.value = false;
+    } catch (e) {
+      print("error buying book $e");
+      isLoading.value = false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
 // **************check if user bought that book**********
 //   RxBool userBoughtBook=false.obs;
@@ -436,22 +447,25 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
 // }
 
 // **************get seller data**********
-  RxString sellerName=''.obs;
+  RxString sellerName = ''.obs;
 
-Future<void> getSellerData(String sellerId) async {
- try{
-   DocumentSnapshot docSnap= await FirebaseFirestore.instance.collection('userDetails').doc(sellerId).get();
-   if(docSnap.exists){
-     dynamic sellerData=docSnap.data();
-     sellerName.value=sellerData['userName'];
-   }else{
-     sellerName.value='';
-     print("no seller found");
-   }
- }catch(e){
-   print("Error fetching seller data $e");
- }
-}
+  Future<void> getSellerData(String sellerId) async {
+    try {
+      DocumentSnapshot docSnap = await FirebaseFirestore.instance
+          .collection('userDetails')
+          .doc(sellerId)
+          .get();
+      if (docSnap.exists) {
+        dynamic sellerData = docSnap.data();
+        sellerName.value = sellerData['userName'];
+      } else {
+        sellerName.value = '';
+        print("no seller found");
+      }
+    } catch (e) {
+      print("Error fetching seller data $e");
+    }
+  }
 // @override
 //   void onInit() {
 //     // TODO: implement onInit
@@ -459,5 +473,4 @@ Future<void> getSellerData(String sellerId) async {
 //     fetchUserBookListing();
 //
 // }
-
 }

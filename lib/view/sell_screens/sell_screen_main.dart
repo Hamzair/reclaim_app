@@ -12,7 +12,8 @@ import 'package:reclaim_app/const/color.dart';
 import 'package:reclaim_app/controller/bookListing_controller.dart';
 import 'package:reclaim_app/controller/home_controller.dart';
 import 'package:reclaim_app/controller/user_controller.dart';
-import 'package:reclaim_app/view/home_screen/book_details_screen.dart';
+
+import 'package:reclaim_app/view/home_screen/home_details_screen.dart';
 import 'package:reclaim_app/view/sell_screens/book_sell_screen.dart';
 import 'package:reclaim_app/view/sell_screens/list_sell_book_screen.dart';
 import 'package:reclaim_app/widgets/custom_text.dart';
@@ -166,7 +167,7 @@ class _SellScreenMainState extends State<SellScreenMain> {
                           return GestureDetector(
                               onTap: () {
                                 Get.to(
-                                  BookDetailsScreen(
+                              HomeDetailsScreen(
                                     // bookDetail: books,
                                     // index: index,
                                     // comingfromSellScreen: true,

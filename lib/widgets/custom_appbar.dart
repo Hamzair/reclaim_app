@@ -250,117 +250,126 @@ class CustomAppBarHome extends StatelessWidget implements PreferredSizeWidget {
                   image: AssetImage(AppImages.appbardesign),
                   fit: BoxFit.cover)),
           child: SafeArea(
-            child: Column(
+            child: Stack(
               children: [
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
+
+                Column(
                   children: [
                     SizedBox(
-                      width: 15.w,
+                      height: 5.h,
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          homeController.openDrawer();
-                        },
-                        child: SvgPicture.asset(AppIcons.drawericon)),
-                    SizedBox(
-                      width: 20.w,
+                    Row(
+
+                      children: [
+                        SizedBox(
+                          width: 15.w,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                              homeController.openDrawer();
+                            },
+                            child: SvgPicture.asset(AppIcons.drawericon)),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+
+                        const Spacer(),
+                        GestureDetector(
+                            onTap: () {
+                              CustomRoute.navigateTo(context, const MainChat());
+                            },
+                            child: SvgPicture.asset(AppIcons.chaticon)),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              CustomRoute.navigateTo(
+                                  context, const NotificationScreen());
+                            },
+                            child: SvgPicture.asset(AppIcons.notificationIcon)),
+                        SizedBox(
+                          width: 23.w,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 210.w,
-                      child: InterCustomText(
-                        text: 'Hey, Joe',
-                        textColor: Colors.white,
-                        fontsize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.0.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 273.w,
+                            child: TextField(
+                              controller: homeController.bookSearchController,
+                              focusNode: searchFocusNode,
+                              style: GoogleFonts.inter(
+                                  textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.11.sp,
+                                      fontWeight: FontWeight.w500)),
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  borderSide: BorderSide.none,
+                                ),
+                                fillColor: Colors.black.withOpacity(0.45),
+                                filled: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 10.w, vertical: 15.h),
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                ),
+                                hintText: 'Search',
+                                hintStyle: GoogleFonts.inter(
+                                    textStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.11.sp,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                Get.bottomSheet(
+                                  isScrollControlled: true,
+                                  Container(
+                                    width: double.infinity,
+                                    height: 703.h,
+                                    padding: EdgeInsets.all(20.sp),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(30.r),
+                                            topRight: Radius.circular(30.r))),
+                                    child: const BooksFilterBottomSheet(),
+                                  ),
+                                );
+                              },
+                              child: SvgPicture.asset(AppIcons.filtericon)),
+                        ],
                       ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                        onTap: () {
-                          CustomRoute.navigateTo(context, const MainChat());
-                        },
-                        child: SvgPicture.asset(AppIcons.chaticon)),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          CustomRoute.navigateTo(
-                              context, const NotificationScreen());
-                        },
-                        child: SvgPicture.asset(AppIcons.notificationIcon)),
-                    SizedBox(
-                      width: 23.w,
-                    ),
+                    )
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.0.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 273.w,
-                        child: TextField(
-                          controller: homeController.bookSearchController,
-                          focusNode: searchFocusNode,
-                          style: GoogleFonts.inter(
-                              textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.11.sp,
-                                  fontWeight: FontWeight.w500)),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.r),
-                              borderSide: BorderSide.none,
-                            ),
-                            fillColor: Colors.black.withOpacity(0.45),
-                            filled: true,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 15.h),
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: Colors.white,
-                            ),
-                            hintText: 'Search',
-                            hintStyle: GoogleFonts.inter(
-                                textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.11.sp,
-                                    fontWeight: FontWeight.w500)),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8.w,
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Get.bottomSheet(
-                              isScrollControlled: true,
-                              Container(
-                                width: double.infinity,
-                                height: 703.h,
-                                padding: EdgeInsets.all(20.sp),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30.r),
-                                        topRight: Radius.circular(30.r))),
-                                child: const BooksFilterBottomSheet(),
-                              ),
-                            );
-                          },
-                          child: SvgPicture.asset(AppIcons.filtericon)),
-                    ],
-                  ),
-                )
+                Positioned(
+                  top: 10,
+                  left: 60,
+                  child: SizedBox(
+                      height: 50.h,
+                      width: 120.w,
+
+                      child: Image.asset(
+                        AppImages.reclaimlogo,
+                        fit: BoxFit.fill,
+                      )),
+                ),
+
               ],
             ),
           ),
@@ -375,13 +384,13 @@ class CustomAppBarHome extends StatelessWidget implements PreferredSizeWidget {
             ? 210.h
             : Get.width <= 400
                 ? 215.h // You can specify the width for widths less than 425
-                : Get.width <= 440?
-        195.h:
-        Get.width <= 768
-                    ? 250
-                        .h // You can specify the width for widths less than 768
-                    // You can specify the width for widths less than 1024
+                : Get.width <= 440
+                    ? 195.h
+                    : Get.width <= 768
+                        ? 250
+                            .h // You can specify the width for widths less than 768
+                        // You can specify the width for widths less than 1024
 
-                    : 280.h,
+                        : 280.h,
       ); // Adjust height as needed
 }

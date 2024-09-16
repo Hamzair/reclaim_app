@@ -5,7 +5,7 @@ import 'package:reclaim_app/view/profile_screen/components/privacy_policy.dart';
 import 'package:reclaim_app/view/splash/splash_sceen.dart';
 import 'package:reclaim_app/view/wallet/wallet.dart';
 import 'helper/bindings.dart';
-import 'view/home_screen/home_screen_books.dart';
+import 'view/home_screen/home_screen.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();

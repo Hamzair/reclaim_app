@@ -26,19 +26,18 @@ class _BooksFilterBottomSheetState extends State<BooksFilterBottomSheet> {
     final TextEditingController authorController = TextEditingController();
     final TextEditingController teacherController = TextEditingController();
     final List<String> sizes = [
-      '6',
-      '6.5',
-      '7',
-      '7.5',
-      '8',
-      '8.5',
-      '9',
-      '9.6',
-      '10',
-      '10.5',
-      '11',
-      '12',
+      '3XS',
+      '2XS',
+      'XS',
+      'S',
+      'M',
+      'L',
+      'XL',
+      '2XL',
+      '3XL',
+      '4XL',
     ];
+
 
     return SingleChildScrollView(
       child: Column(

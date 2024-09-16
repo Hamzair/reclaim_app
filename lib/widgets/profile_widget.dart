@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:reclaim_app/const/assets/svg_assets.dart';
+import 'package:reclaim_app/const/color.dart';
 
 import 'custom_text.dart';
 
@@ -28,6 +29,7 @@ class ProfileWidget extends StatelessWidget {
           height: 50.h,
           width: 50.w,
           fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
         ),
         title: Padding(
           padding: EdgeInsets.only(left: 10.sp),

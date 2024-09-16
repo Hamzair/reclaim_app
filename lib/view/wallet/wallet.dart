@@ -469,10 +469,9 @@ Widget productCard(
                   // height: 36.h,
                   decoration: BoxDecoration(
                       color: primaryColor, shape: BoxShape.circle),
-                  child: SizedBox(
-                      height: 22.h,
-                      width: 22.w,
-                      child: Image.asset(AppImages.Remove))),
+                  child: Center(
+                    child: Icon(Icons.favorite,color: Colors.white,size: 20,),
+                  )),
             ),
           ],
         ),
@@ -497,7 +496,7 @@ Widget productCard(
               ),
               SizedBox(height: 4),
               InterCustomText(
-                text: '\$$price',
+                text: '$price Aed',
                 textColor: Color(0xff222222),
                 fontWeight: FontWeight.w500,
                 fontsize: 14.sp,

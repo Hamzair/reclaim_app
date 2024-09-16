@@ -1,6 +1,6 @@
 // import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 // import 'package:creekapp/const/assets/svg_assets.dart';
-// import 'package:creekapp/view/home_screen/home_screen_books.dart';
+// import 'package:creekapp/view/home_screen/home_screen.dart';
 // import 'package:creekapp/view/sell_screens/book_sell_screen.dart';
 //
 // import 'package:flutter/cupertino.dart';
@@ -209,7 +209,7 @@ import 'package:reclaim_app/controller/home_controller.dart';
 import 'package:reclaim_app/controller/user_controller.dart';
 import 'package:reclaim_app/helper/app_life_cycle.dart';
 import 'package:reclaim_app/view/drawer/drawer.dart';
-import 'package:reclaim_app/view/home_screen/home_screen_books.dart';
+import 'package:reclaim_app/view/home_screen/home_screen.dart';
 import 'package:reclaim_app/view/profile_screen/profile.dart';
 import 'package:reclaim_app/view/sell_screens/sell_screen_main.dart';
 import 'package:reclaim_app/view/wallet/wallet.dart';

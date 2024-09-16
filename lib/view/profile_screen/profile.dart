@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -23,6 +22,7 @@ import '../chat_screen/main_chat.dart';
 import '../notification/notification_screen.dart';
 import 'components/edit_profile.dart';
 import 'components/privacy_policy.dart';
+import 'components/review.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -50,7 +50,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         appBar: CustomAppBar(
           homeController: homeController,
           text: 'Profile',
@@ -86,12 +86,11 @@ class _ProfileState extends State<Profile> {
                         width: 10.w,
                       ),
                       LexendCustomText(
-                          text: 'Hamza',
-                          fontWeight: FontWeight.w400,
-                          fontsize: 20.sp,
-                          textColor: blackTitleColor,
-                        ),
-
+                        text: 'Hamza',
+                        fontWeight: FontWeight.w400,
+                        fontsize: 20.sp,
+                        textColor: blackTitleColor,
+                      ),
                       const Spacer(),
                       GestureDetector(
                           onTap: () {
@@ -108,87 +107,97 @@ class _ProfileState extends State<Profile> {
                     color: Color(0xffDADADA),
                     thickness: 1.5,
                   ),
-
-                  // Column(
-                  //   children: [
-                  //     Padding(
-                  //       padding: EdgeInsets.only(left: 25.w, right: 25.w),
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           Column(
-                  //             children: [
-                  //               Obx(() {
-                  //                 return LexendCustomText(
-                  //                   text: bookListingController
-                  //                       .mySellListings.length
-                  //                       .toString(),
-                  //                   fontWeight: FontWeight.w400,
-                  //                   fontsize: 20.sp,
-                  //                   textColor: blackTitleColor,
-                  //                 );
-                  //               }),
-                  //               LexendCustomText(
-                  //                 text: 'Listed',
-                  //                 fontWeight: FontWeight.w400,
-                  //                 fontsize: 10.sp,
-                  //                 textColor: lightTitleColor,
-                  //               ),
-                  //             ],
-                  //           ),
-                  //           Container(
-                  //             height: 24.h,
-                  //             width: 2.w,
-                  //             color: const Color(0xffE0E0E0),
-                  //           ),
-                  //           Column(
-                  //             children: [
-                  //               Obx(() {
-                  //                 return LexendCustomText(
-                  //                   text:
-                  //                       userController.saleSum.value.toString(),
-                  //                   fontWeight: FontWeight.w400,
-                  //                   fontsize: 20.sp,
-                  //                   textColor: blackTitleColor,
-                  //                 );
-                  //               }),
-                  //               LexendCustomText(
-                  //                 text: 'Sales',
-                  //                 fontWeight: FontWeight.w400,
-                  //                 fontsize: 10.sp,
-                  //                 textColor: lightTitleColor,
-                  //               ),
-                  //             ],
-                  //           ),
-                  //           Container(
-                  //             height: 24.h,
-                  //             width: 2.w,
-                  //             color: const Color(0xffE0E0E0),
-                  //           ),
-                  //           Column(
-                  //             children: [
-                  //               Obx(() {
-                  //                 return LexendCustomText(
-                  //                   text: userController.userPurchases.length
-                  //                       .toString(),
-                  //                   fontWeight: FontWeight.w400,
-                  //                   fontsize: 20.sp,
-                  //                   textColor: blackTitleColor,
-                  //                 );
-                  //               }),
-                  //               LexendCustomText(
-                  //                 text: 'Purchases',
-                  //                 fontWeight: FontWeight.w400,
-                  //                 fontsize: 10.sp,
-                  //                 textColor: lightTitleColor,
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 25.w, right: 25.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                LexendCustomText(
+                                  text: '10',
+                                  fontWeight: FontWeight.w400,
+                                  fontsize: 20.sp,
+                                  textColor: blackTitleColor,
+                                ),
+                                LexendCustomText(
+                                  text: 'Listed',
+                                  fontWeight: FontWeight.w400,
+                                  fontsize: 10.sp,
+                                  textColor: lightTitleColor,
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 24.h,
+                              width: 2.w,
+                              color: const Color(0xffE0E0E0),
+                            ),
+                            Column(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: '20 ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18.sp,
+                                          color: blackTitleColor,
+                                          fontFamily:
+                                              'Lexend', // Optional if you're using a custom font
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'Aed',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight
+                                              .w500, // Different style for 'Aed'
+                                          fontSize: 12.sp,
+                                          color: blackTitleColor,
+                                          fontFamily:
+                                              'Lexend', // Optional if you're using a custom font
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                LexendCustomText(
+                                  text: 'Earned',
+                                  fontWeight: FontWeight.w400,
+                                  fontsize: 10.sp,
+                                  textColor: lightTitleColor,
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 24.h,
+                              width: 2.w,
+                              color: const Color(0xffE0E0E0),
+                            ),
+                            Column(
+                              children: [
+                                LexendCustomText(
+                                  text: '5',
+                                  fontWeight: FontWeight.w400,
+                                  fontsize: 20.sp,
+                                  textColor: blackTitleColor,
+                                ),
+                                LexendCustomText(
+                                  text: 'Purchases',
+                                  fontWeight: FontWeight.w400,
+                                  fontsize: 10.sp,
+                                  textColor: lightTitleColor,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -215,6 +224,16 @@ class _ProfileState extends State<Profile> {
                       CustomRoute.navigateTo(context, const PrivacyPolicy());
                     },
                     title: 'Privacy Policy',
+                    imgUrl: AppIcons.privacyIcon,
+                  ),
+                  SizedBox(
+                    height: 9.h,
+                  ),
+                  ProfileWidget(
+                    onTap: () {
+                      CustomRoute.navigateTo(context,  ReviewScreen());
+                    },
+                    title: 'Reviews',
                     imgUrl: AppIcons.privacyIcon,
                   ),
                   SizedBox(

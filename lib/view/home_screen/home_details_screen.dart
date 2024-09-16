@@ -18,11 +18,11 @@ import 'package:reclaim_app/widgets/custom_text.dart';
 import '../../const/assets/image_assets.dart';
 import '../../widgets/custom _backbutton.dart';
 
-class BookDetailsScreen extends StatefulWidget {
+class HomeDetailsScreen extends StatefulWidget {
   // final dynamic bookDetail;
   // final int index;
   // final bool comingfromSellScreen;
-  const BookDetailsScreen({
+  const HomeDetailsScreen({
     super.key,
     // required this.bookDetail,
     // required this.index,
@@ -30,10 +30,10 @@ class BookDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<BookDetailsScreen> createState() => _BookDetailsScreenState();
+  State<HomeDetailsScreen> createState() => _HomeDetailsScreenState();
 }
 
-class _BookDetailsScreenState extends State<BookDetailsScreen> {
+class _HomeDetailsScreenState extends State<HomeDetailsScreen> {
   final BookListingController bookListingController =
       Get.find<BookListingController>();
   final HomeController homeController = Get.find<HomeController>();
@@ -109,7 +109,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             fontsize: 20.sp,
                           ),
                           InterCustomText(
-                            text: '\$250',
+                            text: '250 Aed',
                             textColor: Colors.black,
                             fontWeight: FontWeight.w600,
                             fontsize: 18.sp,

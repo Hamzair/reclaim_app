@@ -11,7 +11,7 @@ import 'package:reclaim_app/const/assets/image_assets.dart';
 import 'package:reclaim_app/const/color.dart';
 import 'package:reclaim_app/controller/home_controller.dart';
 import 'package:reclaim_app/controller/user_controller.dart';
-import 'package:reclaim_app/view/home_screen/book_details_screen.dart';
+
 import 'package:reclaim_app/widgets/custom_text.dart';
 
 import '../../controller/bookListing_controller.dart';
@@ -20,6 +20,7 @@ import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_route.dart';
 import '../notification/notification_screen.dart';
 import 'components/books_filter_sheet.dart';
+import 'home_details_screen.dart';
 
 class HomeScreenBooks extends StatefulWidget {
   const HomeScreenBooks({super.key});
@@ -102,17 +103,68 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: List.generate(
-                              5,
-                              (index) => Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    child: SizedBox(
-                                        height: 60.h,
-                                        width: 82.w,
-                                        child: Image.asset(AppImages.image2)),
-                                  )),
+                            5,
+                                (index) => Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.w),
+                              child: SizedBox(
+                                height: 60.h, // You can set your desired size here
+                                width: 60.w,  // Same as height to maintain square shape
+                                child: AspectRatio(
+                                  aspectRatio: 1, // This ensures the widget remains a square
+                                  child: Image.asset(AppImages.image2, fit: BoxFit.cover),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
+
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              MontserratCustomText(
+                text: 'Followings',
+                fontsize: 14.sp,
+                textColor: primaryColor,
+                fontWeight: FontWeight.w600,
+                // height: 1,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.h),
+
+                  // height: 1.h,
+                  decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(8.r)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(
+                            5,
+                                (index) => Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.w),
+                              child: SizedBox(
+                                height: 60.h, // You can set your desired size here
+                                width: 60.w,  // Same as height to maintain square shape
+                                child: AspectRatio(
+                                  aspectRatio: 1, // This ensures the widget remains a square
+                                  child: Image.asset(AppImages.image2, fit: BoxFit.cover),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
                     ],
                   ),
                 ),
@@ -160,7 +212,7 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
               ),
               GestureDetector(
                   onTap: () {
-                    Get.to(BookDetailsScreen());
+                    Get.to(HomeDetailsScreen());
                   },
                   child: GridView.count(
                     physics: NeverScrollableScrollPhysics(),
@@ -317,7 +369,7 @@ Widget productCard(
               ),
               SizedBox(height: 4),
               InterCustomText(
-                text: '\$$price',
+                text: '$price Aed',
                 textColor: Color(0xff222222),
                 fontWeight: FontWeight.w500,
                 fontsize: 14.sp,
