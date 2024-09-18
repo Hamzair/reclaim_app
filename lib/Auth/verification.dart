@@ -48,12 +48,10 @@ class Verification extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 100.h,
+                      height: 190.h,
                     ),
-                    Logo(),
-                    SizedBox(
-                      height: 25.h,
-                    ),
+
+
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25.sp),
                      child: Column(

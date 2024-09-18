@@ -109,7 +109,10 @@ class _EditProfileState extends State<EditProfile> {
                         onTap: () {
                           userController.pickImage();
                         },
-                        child: Icon(Icons.camera_alt_rounded,size: 35,color: primaryColor,)))
+                        child: SizedBox(
+                            height: 44.h,
+                            width: 44.w,
+                            child: Image.asset(AppImages.editimage))))
               ],
             ),
           ),

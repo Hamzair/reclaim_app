@@ -23,7 +23,6 @@ class _BooksFilterBottomSheetState extends State<BooksFilterBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
-    final TextEditingController authorController = TextEditingController();
     final TextEditingController teacherController = TextEditingController();
     final List<String> sizes = [
       '3XS',
@@ -75,7 +74,7 @@ class _BooksFilterBottomSheetState extends State<BooksFilterBottomSheet> {
                   homeController.priceSliderValue.value = 50;
                   homeController.selectedCondition.value = 0;
                   homeController.sliderValue.value = 50;
-                  authorController.clear();
+                  homeController.authorController.clear();
                   teacherController.clear();
                   // homeController.classOption.value = 'Class 10';
                   homeController.filteredBooks.value =
@@ -257,7 +256,7 @@ class _BooksFilterBottomSheetState extends State<BooksFilterBottomSheet> {
           SizedBox(height: 5.h),
           CustomSellTextField(
             suffixIcon: const Icon(Icons.search),
-            controller: authorController,
+            controller: homeController.authorController,
           ),
           // SizedBox(height: 19.h),
           // RalewayCustomText(
@@ -323,7 +322,7 @@ class _BooksFilterBottomSheetState extends State<BooksFilterBottomSheet> {
           GestureDetector(
             onTap: () {
               print("HI");
-              homeController.applyFilters(authorController.text);
+              homeController.applyFilters(homeController.authorController.text);
               Get.back();
 
               print(homeController.filteredBooks);

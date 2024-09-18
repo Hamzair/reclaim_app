@@ -31,6 +31,91 @@ class BookListingController extends GetxController {
   final TextEditingController classNameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   // final user=FirebaseAuth.instance.currentUser!.uid;
+  List<String> restrictedWords = [
+    'fuck', 'fed', 'fing', 'shit', 'bitch', 'asshole', 'cunt', 'dick', 'dickhead', 'pussy',
+    'motherfucker', 'tit', 'sex', 'porn', 'nudes', 'erotic', 'strip', 'masturbation', 'horny',
+    'lustful', 'nsfw', 'xxx', 'kill', 'murder', 'rape', 'stab', 'slaughter', 'torture',
+    'bomb', 'terrorist', 'assault', 'abuse', 'nigger', 'faggot', 'retard', 'bitch', 'slut',
+    'cunt', 'racist slur', 'homophobic slur', 'islamophobic', 'anti-semitic', 'xenophobic slur',
+    'transphobic slur', 'cocaine', 'heroin', 'meth', 'weed', 'marijuana', 'high', 'junkie',
+    'dealer', 'stoned', 'ecstasy', 'lsd', 'scammer', 'cheat', 'fraud', 'bullshit', 'douche', 'thief'
+  ];
+
+  RxString errorText = ''.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    titleController.addListener(() {
+      String inputText = titleController.text;
+      if (_containsRestrictedWords(inputText)) {
+        errorText.value = 'Text contains restricted words';
+        titleController.clear();
+        Get.snackbar('Error', 'Your message contains inappropriate content'); // Clear the text field if restricted word is found
+      } else {
+        errorText.value = ''; // Clear the error if no restricted words
+      }
+    });
+    authorController.addListener(() {
+      String inputText = authorController.text;
+      if (_containsRestrictedWords(inputText)) {
+        errorText.value = 'Text contains restricted words';
+        authorController.clear();
+        Get.snackbar('Error', 'Your message contains inappropriate content'); // Clear the text field if restricted word is found
+      } else {
+        errorText.value = ''; // Clear the error if no restricted words
+      }
+    });
+    bookPartController.addListener(() {
+      String inputText = bookPartController.text;
+      if (_containsRestrictedWords(inputText)) {
+        errorText.value = 'Text contains restricted words';
+        bookPartController.clear();
+        Get.snackbar('Error', 'Your message contains inappropriate content'); // Clear the text field if restricted word is found
+      } else {
+        errorText.value = ''; // Clear the error if no restricted words
+      }
+    });
+    classNameController.addListener(() {
+      String inputText = classNameController.text;
+      if (_containsRestrictedWords(inputText)) {
+        errorText.value = 'Text contains restricted words';
+        classNameController.clear();
+        Get.snackbar('Error', 'Your message contains inappropriate content'); // Clear the text field if restricted word is found
+      } else {
+        errorText.value = ''; // Clear the error if no restricted words
+      }
+    });
+    priceController.addListener(() {
+      String inputText = priceController.text;
+      if (_containsRestrictedWords(inputText)) {
+        errorText.value = 'Text contains restricted words';
+        priceController.clear();
+        Get.snackbar('Error', 'Your message contains inappropriate content'); // Clear the text field if restricted word is found
+      } else {
+        errorText.value = ''; // Clear the error if no restricted words
+      }
+    });
+  }
+  // Method to check for restricted words
+  bool _containsRestrictedWords(String text) {
+    for (var word in restrictedWords) {
+      if (text.toLowerCase().contains(word.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    authorController.dispose();
+    bookPartController.dispose();
+    classNameController.dispose();
+    priceController.dispose();
+
+    super.dispose();
+  }
   RxString bookCondition = 'New'.obs;
   RxString category = 'Men'.obs;
   RxString size = '3XS'.obs;

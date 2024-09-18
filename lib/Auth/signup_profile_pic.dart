@@ -28,7 +28,7 @@ class SignupProfilePic extends StatelessWidget {
       SizedBox(
         height: 100.h,
       ),
-      Logo(),
+
       SizedBox(
         height: 25.h,
       ),

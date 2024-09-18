@@ -27,17 +27,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return ClipPath(
       clipper: OvalBottomBorderClipper(),
       child: Container(
-        height: preferredSize.height,
-        padding: EdgeInsets.only(bottom: 20.h), // Adjust padding as needed
+        // height: preferredSize.height,
+      padding: EdgeInsets.only(bottom: 20.h), // Adjust padding as needed
         decoration: const BoxDecoration(
           color: primaryColor,
-          image: DecorationImage(
-            image: AssetImage(AppImages.appbardesign),
-            fit: BoxFit.cover,
-          ),
+
         ),
         child: SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
                 height: 10.h,
@@ -84,6 +82,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 20.h,
+              ),
             ],
           ),
         ),
@@ -92,7 +93,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(125.h); // Adjust height as needed
+  Size get preferredSize => Size.fromHeight(128.h); // Adjust height as needed
 }
 
 class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
@@ -106,17 +107,16 @@ class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
     return ClipPath(
       clipper: OvalBottomBorderClipper(),
       child: Container(
-        height: preferredSize.height,
+        // height: preferredSize.height,
         padding: EdgeInsets.only(bottom: 20.h), // Adjust padding as needed
         decoration: const BoxDecoration(
           color: primaryColor,
-          image: DecorationImage(
-            image: AssetImage(AppImages.appbardesign),
-            fit: BoxFit.cover,
-          ),
+
         ),
         child: SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+
             children: [
               SizedBox(
                 height: 10.h,
@@ -157,6 +157,10 @@ class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
                     width: 23.w,
                   ),
                 ],
+
+              ),
+              SizedBox(
+                height: 20.h,
               ),
             ],
           ),
@@ -166,7 +170,7 @@ class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(125.h); // Adjust height as needed
+  Size get preferredSize => Size.fromHeight(128.h); // Adjust height as needed
 }
 
 class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
@@ -180,17 +184,16 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
     return ClipPath(
       clipper: OvalBottomBorderClipper(),
       child: Container(
-        height: preferredSize.height,
+        // height: preferredSize.height,
         padding: EdgeInsets.only(bottom: 20.h), // Adjust padding as needed
         decoration: const BoxDecoration(
           color: primaryColor,
-          image: DecorationImage(
-            image: AssetImage(AppImages.appbardesign),
-            fit: BoxFit.cover,
-          ),
+
         ),
         child: SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+
             children: [
               SizedBox(
                 height: 10.h,
@@ -212,6 +215,9 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 20.h,
+              ),
             ],
           ),
         ),
@@ -220,7 +226,7 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(125.h); // Adjust height as needed
+  Size get preferredSize => Size.fromHeight(128.h); // Adjust height as needed
 }
 
 class CustomAppBarHome extends StatelessWidget implements PreferredSizeWidget {
@@ -243,65 +249,50 @@ class CustomAppBarHome extends StatelessWidget implements PreferredSizeWidget {
           FocusScope.of(context).unfocus();
         },
         child: Container(
-          height: preferredSize.height,
           decoration: const BoxDecoration(
               color: primaryColor,
-              image: DecorationImage(
-                  image: AssetImage(AppImages.appbardesign),
-                  fit: BoxFit.cover)),
+             ),
           child: SafeArea(
             child: Stack(
               children: [
-
                 Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: 5.h,
+                      height: 10.h,
                     ),
                     Row(
-
                       children: [
-                        SizedBox(
-                          width: 15.w,
-                        ),
+                        SizedBox(width: 15.w),
                         GestureDetector(
                             onTap: () {
                               FocusScope.of(context).unfocus();
                               homeController.openDrawer();
                             },
                             child: SvgPicture.asset(AppIcons.drawericon)),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-
                         const Spacer(),
                         GestureDetector(
                             onTap: () {
                               CustomRoute.navigateTo(context, const MainChat());
                             },
                             child: SvgPicture.asset(AppIcons.chaticon)),
-                        SizedBox(
-                          width: 10.w,
-                        ),
+                        SizedBox(width: 10.w),
                         GestureDetector(
                             onTap: () {
-                              CustomRoute.navigateTo(
-                                  context, const NotificationScreen());
+                              CustomRoute.navigateTo(context, const NotificationScreen());
                             },
                             child: SvgPicture.asset(AppIcons.notificationIcon)),
-                        SizedBox(
-                          width: 23.w,
-                        ),
+                        SizedBox(width: 23.w),
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20.0.h),
+                      padding: EdgeInsets.only(top: 20.0.h,bottom: 20.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
                             width: 273.w,
-                            child: TextField(
+                            child: Obx(() => TextField(
                               controller: homeController.bookSearchController,
                               focusNode: searchFocusNode,
                               style: GoogleFonts.inter(
@@ -328,12 +319,13 @@ class CustomAppBarHome extends StatelessWidget implements PreferredSizeWidget {
                                         color: Colors.white,
                                         fontSize: 15.11.sp,
                                         fontWeight: FontWeight.w500)),
+                                errorText: homeController.errorText.value.isEmpty
+                                    ? null
+                                    : homeController.errorText.value,
                               ),
-                            ),
+                            )),
                           ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
+                          SizedBox(width: 8.w),
                           GestureDetector(
                               onTap: () {
                                 Get.bottomSheet(
@@ -354,22 +346,23 @@ class CustomAppBarHome extends StatelessWidget implements PreferredSizeWidget {
                               child: SvgPicture.asset(AppIcons.filtericon)),
                         ],
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                   ],
                 ),
                 Positioned(
-                  top: 10,
+                  top: 15,
                   left: 60,
                   child: SizedBox(
                       height: 50.h,
                       width: 120.w,
-
                       child: Image.asset(
                         AppImages.reclaimlogo,
                         fit: BoxFit.fill,
                       )),
                 ),
-
               ],
             ),
           ),
@@ -380,17 +373,15 @@ class CustomAppBarHome extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(
-        Get.width <= 375
-            ? 210.h
-            : Get.width <= 400
-                ? 215.h // You can specify the width for widths less than 425
-                : Get.width <= 440
-                    ? 195.h
-                    : Get.width <= 768
-                        ? 250
-                            .h // You can specify the width for widths less than 768
-                        // You can specify the width for widths less than 1024
-
-                        : 280.h,
-      ); // Adjust height as needed
+    Get.width <= 375
+        ? 210.h
+        : Get.width <= 400
+        ? 205.h
+        : Get.width <= 440
+        ? 195.h
+        : Get.width <= 768
+        ? 250.h
+        : 280.h,
+  );
 }
+

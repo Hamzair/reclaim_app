@@ -324,7 +324,7 @@ class _ProfileState extends State<Profile> {
                     },
                     child: Row(
                       children: [
-                        SvgPicture.asset(AppIcons.logoutIcon),
+                        SvgPicture.asset(AppIcons.logoutIcon,height: 50.h,width: 50.w,colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),),
                         Padding(
                           padding: EdgeInsets.only(left: 26.sp),
                           child: WorkSansCustomText(

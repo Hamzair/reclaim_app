@@ -135,7 +135,61 @@ RxBool isLoading = false.obs;
 
 
 // ******************Search***********
-  final TextEditingController bookSearchController=TextEditingController();
+  // Restricted words list
+  List<String> restrictedWords = [
+    'fuck', 'fed', 'fing', 'shit', 'bitch', 'asshole', 'cunt', 'dick', 'dickhead', 'pussy',
+    'motherfucker', 'tit', 'sex', 'porn', 'nudes', 'erotic', 'strip', 'masturbation', 'horny',
+    'lustful', 'nsfw', 'xxx', 'kill', 'murder', 'rape', 'stab', 'slaughter', 'torture',
+    'bomb', 'terrorist', 'assault', 'abuse', 'nigger', 'faggot', 'retard', 'bitch', 'slut',
+    'cunt', 'racist slur', 'homophobic slur', 'islamophobic', 'anti-semitic', 'xenophobic slur',
+    'transphobic slur', 'cocaine', 'heroin', 'meth', 'weed', 'marijuana', 'high', 'junkie',
+    'dealer', 'stoned', 'ecstasy', 'lsd', 'scammer', 'cheat', 'fraud', 'bullshit', 'douche', 'thief'
+  ];
+
+  RxString errorText = ''.obs;
+   TextEditingController authorController = TextEditingController();
+
+  TextEditingController bookSearchController = TextEditingController();
+  @override
+  void onInit() {
+    super.onInit();
+    bookSearchController.addListener(() {
+      String inputText = bookSearchController.text;
+      if (_containsRestrictedWords(inputText)) {
+        errorText.value = 'Text contains restricted words';
+        bookSearchController.clear();
+        Get.snackbar('Error', 'Your message contains inappropriate content'); // Clear the text field if restricted word is found
+      } else {
+        errorText.value = ''; // Clear the error if no restricted words
+      }
+    });
+    authorController.addListener(() {
+      String inputText = authorController.text;
+      if (_containsRestrictedWords(inputText)) {
+        errorText.value = 'Text contains restricted words';
+        authorController.clear();
+        Get.snackbar('Error', 'Your message contains inappropriate content'); // Clear the text field if restricted word is found
+      } else {
+        errorText.value = ''; // Clear the error if no restricted words
+      }
+    });
+  }
+  // Method to check for restricted words
+  bool _containsRestrictedWords(String text) {
+    for (var word in restrictedWords) {
+      if (text.toLowerCase().contains(word.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @override
+  void dispose() {
+    bookSearchController.dispose();
+    authorController.dispose();
+    super.dispose();
+  }
   RxList<dynamic> filteredBooks = <dynamic>[].obs;
   void filterBooks() {
     List<dynamic> results = [];
